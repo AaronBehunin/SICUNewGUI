@@ -14,7 +14,9 @@ import jssc.SerialPortException;
  
 public class App 
 {
-    static String[] parsed;
+    static String[] parsed = {"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", 
+    "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", 
+    "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"}; 
 
     static class Read840 implements Runnable    
     {
@@ -89,26 +91,36 @@ public class App
         }
     }
     @SuppressWarnings("serial")
-    static class DrawGUI extends JPanel 
+    static class DrawGUI extends JPanel implements Runnable
     {
         private final static int WIDTH = 3000;
         private final static int HEIGHT = 2000;
         public final static int BORDER = 5;
         public final static int FONT_SIZE = 20;
 
+        private String RoomName;
+
         private Timer timer;
 
         DrawGUI(String roomName, String oneOneFive,String vent,String priority, String[] RawStrings )
         {
+            RoomName = roomName;
+        }
+        public void run()
+        {
+
+        
             setSize(WIDTH, HEIGHT);
             setBackground(Color.BLACK);
 
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
 
+            while(true)
+            {
             //Set the background of Layout
         // Setting a title label
-        JLabel title = new JLabel(roomName.toUpperCase());    
+        JLabel title = new JLabel(RoomName.toUpperCase());    
         title.setForeground(Color.white);                     //Title Color
         title.setFont(new Font(Font.SANS_SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 20));   //title font
 
@@ -125,7 +137,7 @@ public class App
         this.add(title, c);
 
         // Sets the name
-        this.setName(roomName);
+        this.setName(RoomName);
 
         this.setBorder(border);
 
@@ -172,9 +184,11 @@ public class App
 
         this.add(raw,c);
 
+        this.invalidate();
         this.validate();
         this.repaint();
         setVisible(true);
+            }
 
         }      
     }
@@ -185,12 +199,13 @@ public class App
 
         System.out.println("starting serial port");
 
-  //      Read840 read = new Read840();
-  //      new Thread(read).start();     
+        Read840 read = new Read840();
+        new Thread(read).start();     
 
         String[] Raw = {"a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a"};
         
         DrawGUI draw = new DrawGUI("Joe Somebody Room 4", "OneOneFive", "Vent", "High", Raw);
+
         JFrame app = new JFrame("Silent ICU");
 
         app.add(draw, BorderLayout.CENTER);
@@ -198,6 +213,10 @@ public class App
         app.setLocationRelativeTo(null);
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
+
+        new Thread(draw).start();
+
+        
 
 
         
