@@ -2,6 +2,8 @@ package sicu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.*;
@@ -54,15 +56,21 @@ public class App {
         @Override
         public void run() {
 
+           
             try {
                 SerialPort serialPort = new SerialPort("/dev/ttyUSB0");
                 serialPort.openPort();// Open serial port
                 serialPort.setParams(9600, 8, 1, 0);// Set params.
-                boolean written = serialPort.writeString("SNDF\r");
-                System.out.println("Write to serial port success: " + written);
+
+
+
                 String msgReceived = "";
 
-                while (true) {
+               while(true)
+            {
+                boolean written = serialPort.writeString("SNDF\r");
+                System.out.println("Write to serial port success: " + written);
+                msgReceived="";
                     while (msgReceived.length() == 0 || msgReceived.charAt(msgReceived.length() - 1) != (char) 13) {
                         byte[] tmp = serialPort.readBytes();
                         if (tmp != null) {
@@ -70,6 +78,15 @@ public class App {
                         }
                     }
 
+                 /*   BufferedWriter writer = new BufferedWriter(
+                    new FileWriter("/home/sicu/Desktop/840SeriesLogs.txt", true)  //Set true for append mode
+                    );
+                    writer.newLine();   //Add new line
+                    writer.write(msgReceived);
+                    writer.write("\n");
+                    writer.write("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    writer.close();
+*/
                     // System.out.println(msgReceived.length());
                     if (msgReceived.length() == 0)
                         continue;
@@ -103,72 +120,58 @@ public class App {
                     System.out.println("PEEP LOW : " + parsed[61]);
                     System.out.println("Time HIGH : " + parsed[62]);
 
-                    Thread.sleep(1000);
                 }
+                
             } catch (Exception e) {
+                System.out.println(e.toString());
             }
-        }
+        
+    }
     }
 
  /*   @SuppressWarnings("serial")
     static class DrawRoomLabel
     {
         
-
         private String RoomName;
-
         private Timer timer;
-
         DrawGUI(String roomName, String oneOneFive, String vent, String priority, String[] RawStrings) {
             RoomName = roomName;
         }
-
         public void run() {
-
             setSize(WIDTH, HEIGHT);
             setBackground(Color.BLACK);
-
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
-
             while (true) {
                 // Set the background of Layout
                 // Setting a title label
                 JLabel title = new JLabel(RoomName.toUpperCase());
                 title.setForeground(Color.white); // Title Color
                 title.setFont(new Font(Font.SANS_SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 20)); // title font
-
                 Border border = BorderFactory.createLineBorder(Color.white, 2);
                 title.setBorder(border);
-
                 c.fill = GridBagConstraints.BOTH;
                 c.weighty = .25;
                 c.weightx = .5;
                 c.gridx = 0;
                 c.gridy = 0;
-
                 // this.add(title);
                 this.add(title, c);
-
                 // Sets the name
                 this.setName(RoomName);
-
                 this.setBorder(border);
-
                 JLabel info = new JLabel("<html>115 :  " + parsed[115] + "<br>Low Minute Ventilation : " + parsed[116]
                         + "<br>Alarm  Priority :" + parsed[120] + "</html>");
                 info.setForeground(Color.white);
                 info.setFont(new Font(Font.SANS_SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 20));
                 info.setBorder(border);
-
                 c.fill = GridBagConstraints.BOTH;
                 c.weighty = .25;
                 c.weightx = .5;
                 c.gridx = 1;
                 c.gridy = 0;
-
                 this.add(info, c);
-
                 String Raw = "<html>Mandatory Type : " + parsed[8] + "nMode :  " + parsed[7]
                         + "<br>Spontaneous Type :  " + parsed[9] + "<br>Trigger type :  " + parsed[10]
                         + "<br>Respiratory Rate :  " + parsed[11] + "<br>Tidal Volume (L):  " + parsed[12]
@@ -177,32 +180,26 @@ public class App {
                         + "<br>Presssure Support : " + parsed[29] + "<br>PEEP : " + parsed[16] + "<br>Flow Trigger : "
                         + parsed[43] + "<br>Inspitory Time (s): " + parsed[45] + "<br>PEEP HIGH : " + parsed[60]
                         + "<br>PEEP LOW : " + parsed[61] + "<br>Time HIGH : " + parsed[62] + "</html>";
-
                 JLabel raw = new JLabel();
                 raw.setText(Raw);
                 raw.setForeground(Color.white);
                 raw.setFont(new Font(Font.SANS_SERIF, Font.LAYOUT_LEFT_TO_RIGHT, 20));
                 raw.setBorder(border);
-
                 c.weighty = .75;
                 c.gridwidth = 2;
                 c.gridx = 0;
                 c.gridy = 1;
-
                 this.add(raw, c);
-
                 this.invalidate();
                 this.validate();
                 this.repaint();
                 setVisible(true);
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
         }      
     } */
     
@@ -360,3 +357,5 @@ public class App {
 
 
 }
+
+
