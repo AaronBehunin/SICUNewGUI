@@ -324,8 +324,10 @@ public class App {
     public static void DrawAlarms()
     {
         AlarmPanel.removeAll();
-        AlarmLabel.setText("<html>115 :  " + parsed[115] + "<br>Low Minute Ventilation : " + parsed[116]
-        + "<br>Alarm  Priority :" + parsed[120] + "</html>");
+        AlarmLabel.setText("<html><pre>115 :                       " + parsed[115]
+                                + "<br>Low Minute Ventilation :    " + parsed[116]
+                                + "<br>Alarm  Priority :           " + parsed[120]
+                                + "</pre></html>");
         AlarmLabel.setForeground(Color.WHITE);
 
         AlarmPanel.add(AlarmLabel, BorderLayout.CENTER);
@@ -339,14 +341,25 @@ public class App {
     public static void DrawStats()
     {
         StatsPanel.removeAll();
-        StatsLabel.setText("<html>Mandatory Type : " + parsed[8] + "nMode :  " + parsed[7]
-        + "<br>Spontaneous Type :  " + parsed[9] + "<br>Trigger type :  " + parsed[10]
-        + "<br>Respiratory Rate :  " + parsed[11] + "<br>Tidal Volume (L):  " + parsed[12]
-        + "<br>Flow :  " + parsed[13] + "<br>FI02 :  " + parsed[14] + "<br>Wave Pattern : " + parsed[30]
-        + "<br>Apnea (s) : " + parsed[18] + "<br>Inspitory Presssure : " + parsed[44]
-        + "<br>Presssure Support : " + parsed[29] + "<br>PEEP : " + parsed[16] + "<br>Flow Trigger : "
-        + parsed[43] + "<br>Inspitory Time (s): " + parsed[45] + "<br>PEEP HIGH : " + parsed[60]
-        + "<br>PEEP LOW : " + parsed[61] + "<br>Time HIGH : " + parsed[62] + "</html>");
+        StatsLabel.setText("<html><pre>Mandatory Type :         " + parsed[8] 
+                                + "<br>nMode :                  " + parsed[7]
+                                + "<br>Spontaneous Type :       " + parsed[9] 
+                                + "<br>Trigger type :           " + parsed[10]
+                                + "<br>Respiratory Rate :       " + parsed[11] 
+                                + "<br>Tidal Volume (L):        " + parsed[12]
+                                + "<br>Flow :                   " + parsed[13] 
+                                + "<br>FI02 :                   " + parsed[14] 
+                                + "<br>Wave Pattern :           " + parsed[30]
+                                + "<br>Apnea (s) :              " + parsed[18] 
+                                + "<br>Inspitory Presssure :    " + parsed[44]
+                                + "<br>Presssure Support :      " + parsed[29]
+                                + "<br>PEEP :                   " + parsed[16] 
+                                + "<br>Flow Trigger :           " + parsed[43] 
+                                + "<br>Inspitory Time (s):      " + parsed[45] 
+                                + "<br>PEEP HIGH :              " + parsed[60]
+                                + "<br>PEEP LOW :               " + parsed[61]
+                                + "<br>Time HIGH :              " + parsed[62] 
+                                + "</pre></html>");
         StatsLabel.setForeground(Color.WHITE);
 
         StatsPanel.add(StatsLabel, BorderLayout.CENTER);
@@ -357,5 +370,4 @@ public class App {
 
 
 }
-
 
