@@ -7,7 +7,9 @@ import org.apache.commons.codec.binary.Hex;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+
 import java.util.Base64;
+
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.*;
